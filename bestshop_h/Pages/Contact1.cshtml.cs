@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.Design;
 using System.Data.SqlClient;
+using System.Net;
+using System.Net.Mail;
 
 namespace bestshop_h.Pages
 {
@@ -51,10 +53,10 @@ namespace bestshop_h.Pages
         public string SuccessMessage { get; set; } = "";
         public string ErrorMessage { get; set; } = "";
 
+        
+
         public void OnPost()
         {
-
-
             // check if any required field is empty
             if (!ModelState.IsValid)
             {
@@ -83,6 +85,7 @@ namespace bestshop_h.Pages
                         command.Parameters.AddWithValue("@subject", Subject);
                         command.Parameters.AddWithValue("@message", Message);
 
+                        SendEmail();
                         command.ExecuteNonQuery();
                     }
                 }
@@ -93,16 +96,6 @@ namespace bestshop_h.Pages
                 ErrorMessage = "please fill all required fields";
                 return;
             }
-
-            // send confirmation Emai-l to the client
-            //string username = FirstName + " " + LastName;
-
-            //string emailSubject = "About your message";
-            //string emailMessage = "Dear"
-            //+ username + ",\n" + "we recevied your message. thank you for contacting us.\n" + "Our team will contact you very soon.\n" + "best Regars\n\n" + "your Message:\n" + Message;
-
-            //Emailsender.SendEmail(Email, username, emailSubject, emailMessage).Wait();
-
             SuccessMessage = "your message has been received correctly";
 
             FirstName = "";
@@ -113,6 +106,27 @@ namespace bestshop_h.Pages
             Message = "";
 
             ModelState.Clear();
+        }
+
+        // send confirmation Emai-l to the client
+        public void SendEmail()
+        {
+            MailMessage semail = new MailMessage();
+            SmtpClient smtp = new SmtpClient();
+            semail.From = new MailAddress("noreply@cabletvcrm.net", "Cable TV CRM");
+            semail.To.Add("asodisrihari@gmail.com");
+            semail.CC.Add("k.likhitha5@gmail.com");
+            semail.CC.Add("susmithavari@gmail.com");
+            semail.Subject = "BestShop";
+            semail.IsBodyHtml = true;
+            semail.Body = "<p> Email : " + Email + "</p>" + "<p> Phone : " + Phone + " </p> " + "<p> Subject : " + Subject + " </p>" + "<p> Message : " + Message + " </p>";
+            smtp.Port = 366;
+            smtp.Host = "mailuk2.promailserver.com";
+            smtp.EnableSsl = false;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential("noreply@cabletvcrm.net", "Bang@2205$");
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.Send(semail);
         }
     }
 }
