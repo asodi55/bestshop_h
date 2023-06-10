@@ -114,9 +114,9 @@ namespace bestshop_h.Pages
             MailMessage semail = new MailMessage();
             SmtpClient smtp = new SmtpClient();
             semail.From = new MailAddress("noreply@cabletvcrm.net", "Cable TV CRM");
-            semail.To.Add("asodisrihari@gmail.com");
-            semail.CC.Add("k.likhitha5@gmail.com");
-            semail.CC.Add("susmithavari@gmail.com");
+            semail.To.Add(Email);
+            //semail.CC.Add("k.likhitha5@gmail.com");
+            //semail.CC.Add("susmithavari@gmail.com");
             semail.Subject = "BestShop";
             semail.IsBodyHtml = true;
             semail.Body = "<p> Email : " + Email + "</p>" + "<p> Phone : " + Phone + " </p> " + "<p> Subject : " + Subject + " </p>" + "<p> Message : " + Message + " </p>";
