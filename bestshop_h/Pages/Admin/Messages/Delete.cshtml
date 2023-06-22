@@ -1,0 +1,27 @@
+﻿@page
+@using System.Data.SqlClient
+@{
+    string id = Request.Query["id"];
+    try
+    {
+        string connectionstring = "Data Source=mssqluk22.prosql.net;Initial Catalog=cmsapps;Persist Security Info=True;User ID=emp;Password=inDia@143";
+        using (SqlConnection connection = new SqlConnection(connectionstring))
+        {
+            connection.Open();
+
+            string sql = "DELETE FROM messages_h WHERE id=@id";
+
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                command.Parameters.AddWithValue("@id", id);
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+    catch(Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+
+    Response.Redirect("/Admin/Messages/Index");
+}

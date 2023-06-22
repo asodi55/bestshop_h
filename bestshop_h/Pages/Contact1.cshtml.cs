@@ -96,6 +96,7 @@ namespace bestshop_h.Pages
                 ErrorMessage = "please fill all required fields";
                 return;
             }
+
             SuccessMessage = "your message has been received correctly";
 
             FirstName = "";

@@ -1,0 +1,95 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.ComponentModel.DataAnnotations;
+using System.Data.SqlClient;
+
+namespace bestshop_h.Pages.Auth
+{
+
+	[BindProperties]
+	public class RegisterModel : PageModel
+    {
+        [Required(ErrorMessage = "The First Name is required")]
+        public string Firstname { get; set; } = "";
+
+        [Required(ErrorMessage = "The Last Name is required")]
+        public string Lastname { get; set; } = "";
+
+        [Required(ErrorMessage = "The Email is required"), EmailAddress]
+        public string Email { get; set; } = "";
+
+        public string? Phone { get; set; } = "";
+
+        [Required(ErrorMessage = "The Address is required")]
+        public string Address { get; set; } = "";
+
+        [Required(ErrorMessage = "Password is required")]
+        [StringLength(50, ErrorMessage = "Password must be between 5 and 50 characters", MinimumLength = 5)]
+        public string Password { get; set; } = "";
+
+        [Required(ErrorMessage = "Confirm Password is required")]
+        [Compare("Password", ErrorMessage = "Password and Confirm Password do not match")]
+        public string ConfirmPassword { get; set; } = "";
+
+        public string errorMessage = "";
+        public string successMessage = "";
+
+        public void OnGet()
+        {
+        }
+
+        public void OnPost() 
+        {
+            if (!ModelState.IsValid)
+            {
+                errorMessage = "Data validation failed";
+                return;
+            }
+
+            // successfull data validation
+            if (Phone == null) Phone = "";
+
+			// add the user details to the database
+			try
+			{
+				string connectionstring = "Data Source=mssqluk22.prosql.net;Initial Catalog=cmsapps;Persist Security Info=True;User ID=emp;Password=inDia@143";
+				using (SqlConnection connection = new SqlConnection(connectionstring))
+				{
+					connection.Open();
+					string sql = "INSERT INTO users " +
+					"(firstname, lastname, email, phone, address, password, role) VALUES " +
+					"(@firstname, @lastname, @email, @phone, @address, @password, 'client');";
+
+					var passwordHasher = new PasswordHasher<IdentityUser>();
+					string hashedPassword = passwordHasher.HashPassword(new IdentityUser(), Password);
+
+					using (SqlCommand command = new SqlCommand(sql, connection))
+					{
+						command.Parameters.AddWithValue("@firstname", Firstname);
+						command.Parameters.AddWithValue("@lastname", Lastname);
+						command.Parameters.AddWithValue("@email", Email);
+						command.Parameters.AddWithValue("@phone", Phone);
+						command.Parameters.AddWithValue("@address", Address);
+						command.Parameters.AddWithValue("@password", hashedPassword);
+
+						command.ExecuteNonQuery();
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				errorMessage = ex.Message;
+         		return;
+			}
+
+			// send confirmation email to the user
+
+			// initialize the authenticated session => add the user details to the session data
+
+
+			successMessage = "Account created successfully";
+
+        }
+    }
+}

@@ -1,0 +1,49 @@
+﻿@page
+@using System.Data.SqlClient
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment webHostEnvironment
+@{
+    string id = Request.Query["id"];
+
+    try
+    {
+        string connectionstring = "Data Source=mssqluk22.prosql.net;Initial Catalog=cmsapps;Persist Security Info=True;User ID=emp;Password=inDia@143";
+        using (SqlConnection connection = new SqlConnection(connectionstring))
+
+
+        {
+            connection.Open();
+
+            // delete the book image from /images/books/
+            string sqlSelect = "SELECT image_filename FROM books_h WHERE id=@id";
+            using (SqlCommand command = new SqlCommand(sqlSelect, connection))
+            {
+                command.Parameters.AddWithValue("@id", id);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        string image_filename = reader.GetString(0);
+                        string imageFolder = webHostEnvironment.WebRootPath + "/img/books/";
+                        string imageFullPath = System.IO.Path.Combine(imageFolder, image_filename);
+                        System.IO.File.Delete(imageFullPath);
+                        Console.WriteLine("Delete Image " + imageFullPath);
+                    }
+                }
+            }
+
+            // delete the book from the database
+            string sql = "DELETE FROM books_h WHERE id=@id";
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                command.Parameters.AddWithValue("@id", id);
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+
+    Response.Redirect("/Admin/Books/Index");
+}
