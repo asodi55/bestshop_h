@@ -30,7 +30,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Contact1">contact</a>
                         </li>
                     </ul>
-                    <u class="nav-item">
+                    <ul class="navbar-nav">
                         @if (Context.Session.GetString("role") == null)
                         {
                             <li class="nav-item">
@@ -69,7 +69,7 @@
                         }
                         
 
-                    </u>
+                    </ul>
                 </div>
             </div>
         </nav>

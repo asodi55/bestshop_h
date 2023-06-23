@@ -57,7 +57,7 @@ namespace bestshop_h.Pages.Auth
 				using (SqlConnection connection = new SqlConnection(connectionstring))
 				{
 					connection.Open();
-					string sql = "INSERT INTO users " +
+					string sql = "INSERT INTO users_h " +
 					"(firstname, lastname, email, phone, address, password, role) VALUES " +
 					"(@firstname, @lastname, @email, @phone, @address, @password, 'client');";
 
@@ -79,8 +79,16 @@ namespace bestshop_h.Pages.Auth
 			}
 			catch (Exception ex)
 			{
-				errorMessage = ex.Message;
-         		return;
+				if (ex.Message.Contains(Email))
+				{
+					errorMessage = "Email address already used";
+				}
+				else
+				{
+					errorMessage = ex.Message;
+				}
+
+				return;
 			}
 
 			// send confirmation email to the user
