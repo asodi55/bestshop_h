@@ -1,3 +1,4 @@
+using bestshop_h.myhelper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -6,6 +7,7 @@ using System.Data.SqlClient;
 
 namespace bestshop_h.Pages.Admin.Books
 {
+    [Requireauthattribute(RequiredRole ="admin")]
     public class createModel : PageModel
     {
         [BindProperty]

@@ -31,7 +31,7 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav">
-                        @if (Context.Session.GetString("role") == null)
+                        @if (@Context.Session.GetString("role") == null)
                         {
                             <li class="nav-item">
                                 <a class="btn btn-outline-primary me-2" asp-area="" asp-page="/Auth/Register">Register</a>
@@ -40,7 +40,7 @@
                                 <a class="btn btn-primary" asp-area="" asp-page="/Auth/Login">Login</a>
                             </li>
                         }
-                        else if (Context.Session.GetString("role").Equals("Admin"))
+                        else if (@Context.Session.GetString("role").Equals("Admin"))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -54,7 +54,7 @@
                                 </ul>
                             </li>
                         }
-                        else if (Context.Session.GetString("role").Equals("Client"))
+                        else if (@Context.Session.GetString("role").Equals("Client"))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

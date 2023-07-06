@@ -1,6 +1,8 @@
 ﻿@page
 @using System.Data.SqlClient
 @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment webHostEnvironment
+@using bestshop_h.myhelper
+@attribute [Requireauthattribute(RequiredRole = "admin")]
 @{
     string id = Request.Query["id"];
 
