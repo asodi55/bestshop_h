@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 
-namespace bestshop_h.Pages.Admin.Books
+namespace bestshop_h.Pages.Books
 {
-    [Requireauthattribute(RequiredRole ="admin")]
+    [Requireauthattribute(RequiredRole = "admin")]
     public class createModel : PageModel
     {
         [BindProperty]
@@ -95,7 +95,7 @@ namespace bestshop_h.Pages.Admin.Books
                 string connectionstring = "Data Source=mssqluk22.prosql.net;Initial Catalog=cmsapps;Persist Security Info=True;User ID=emp;Password=inDia@143";
                 using (SqlConnection connection = new SqlConnection(connectionstring))
 
-               
+
                 {
                     connection.Open();
                     string sql = "INSERT INTO books_h " +

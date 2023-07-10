@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
 
-namespace bestshop_h.Pages.Admin.Books
+namespace bestshop_h.Pages.Books
 {
-    [Requireauthattribute(RequiredRole = "admin")]
+    
     public class IndexModel : PageModel
     {
         public List<Booksinfo> listBooks = new List<Booksinfo>();
@@ -108,7 +108,7 @@ namespace bestshop_h.Pages.Admin.Books
                     }
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }

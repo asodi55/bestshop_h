@@ -8,7 +8,8 @@ namespace bestshop_h.myhelper
 {
     public class Emailsender
     {
-        public void Sendemail()
+        public void Sendemail(string toEmail, string username,
+            string subject, string message)
         {
             MailMessage semail = new MailMessage();
             SmtpClient smtp = new SmtpClient();

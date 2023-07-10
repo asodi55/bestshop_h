@@ -78,7 +78,7 @@ namespace bestshop_h.Pages.Auth
                                     HttpContext.Session.SetString("role", role);
                                     HttpContext.Session.SetString("created_at", created_at);
 
-                                    // the user is authenticated successfully => redirect to the home page
+                                    
                                     Response.Redirect("/");
                                 }
                             }
@@ -91,6 +91,9 @@ namespace bestshop_h.Pages.Auth
                 errorMessage = ex.Message;
                 return;
             }
+
+
+            // Wrong Email or Password
             errorMessage = "Wrong Email or Password";
 
         }

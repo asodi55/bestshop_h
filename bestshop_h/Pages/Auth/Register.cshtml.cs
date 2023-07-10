@@ -100,23 +100,6 @@ namespace bestshop_h.Pages.Auth
             }
 
 
-            MailMessage semail = new MailMessage();
-            SmtpClient smtp = new SmtpClient();
-            semail.From = new MailAddress("noreply@cabletvcrm.net", "Cable TV CRM");
-            semail.To.Add(Email);
-            //semail.CC.Add("k.likhitha5@gmail.com");
-            //semail.CC.Add("susmithavari@gmail.com");
-            semail.Subject = "BestShop";
-            semail.IsBodyHtml = true;
-            semail.Body = "<p> Email : " + Email + "</p>";
-            smtp.Port = 366;
-            smtp.Host = "mailuk2.promailserver.com";
-            smtp.EnableSsl = false;
-            smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new NetworkCredential("noreply@cabletvcrm.net", "Bang@2205$");
-            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtp.Send(semail);
-
 
             // initialize the authenticated session => add the user details to the session data
             try
@@ -183,7 +166,7 @@ namespace bestshop_h.Pages.Auth
             //semail.CC.Add("susmithavari@gmail.com");
             semail.Subject = "BestShop";
             semail.IsBodyHtml = true;
-            semail.Body = "<p> Email : " + Email + "</p>";
+            semail.Body = "<p> Email : " + Email + "</p>" + "<p> Phone : " + Phone + "</p>" + "<p> Name : " + Lastname + "</p>" + "account created successfully";
             smtp.Port = 366;
             smtp.Host = "mailuk2.promailserver.com";
             smtp.EnableSsl = false;

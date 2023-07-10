@@ -22,7 +22,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
@@ -31,7 +31,7 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav">
-                        @if (@Context.Session.GetString("role") == null)
+                        @if (Context.Session.GetString("role") == null)
                         {
                             <li class="nav-item">
                                 <a class="btn btn-outline-primary me-2" asp-area="" asp-page="/Auth/Register">Register</a>
@@ -40,21 +40,24 @@
                                 <a class="btn btn-primary" asp-area="" asp-page="/Auth/Login">Login</a>
                             </li>
                         }
-                        else if (@Context.Session.GetString("role").Equals("Admin"))
+                        else if (Context.Session.GetString("role").Equals("client"))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Admin
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" asp-page="/Admin/Messages/index">Message</a></li>
-                                    <li><a class="dropdown-item" asp-page="/Admin/Books/Index">Books</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-page="/Admin/Messages/Index">Message</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-page="/Admin/Books/Index">Books</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-page="/Profile">Profile</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" asp-page="/Index">Home</a></li>
                                 </ul>
                             </li>
                         }
-                        else if (@Context.Session.GetString("role").Equals("Client"))
+                        
+                        
+                        else if (Context.Session.GetString("role").Equals("client"))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -62,12 +65,14 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" asp-page="/Index">Home</a></li>
-                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" asp-page="/Profile">Profile</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-page="/Books/Index">Books</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-page="/Admin/Messages/Index">Message</a></li>
                                     <li><a class="dropdown-item" asp-page="/Index">Home</a></li>
                                 </ul>
                             </li>
                         }
-                        
+
 
                     </ul>
                 </div>
